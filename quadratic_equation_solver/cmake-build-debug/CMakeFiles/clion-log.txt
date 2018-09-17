@@ -1,0 +1,4 @@
+/home/marchenko7/clion-2018.1.6/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/marchenko7/ACOS/quadratic_equation_solver
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/marchenko7/ACOS/quadratic_equation_solver/cmake-build-debug
