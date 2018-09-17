@@ -1,4 +1,0 @@
-/home/marchenko7/ACOS/quadratic_equation_solver/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/marchenko7/ACOS/quadratic_equation_solver/cmake-build-debug/CMakeFiles/quadratic_equation_solver_tester.dir
-/home/marchenko7/ACOS/quadratic_equation_solver/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/marchenko7/ACOS/quadratic_equation_solver/cmake-build-debug/CMakeFiles/quadratic_equation_solver.dir
