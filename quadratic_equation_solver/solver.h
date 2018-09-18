@@ -3,6 +3,8 @@
 #include <vector>
 #include <cmath>
 
+#define EPS 1e-9
+
 /**
  * @class QuadraticEquation
  *
@@ -18,7 +20,7 @@ public:
      * @return Solution of quadratic equation
      */
     std::vector<double> Solve() {
-        if (a_ == 0) {
+        if (fabs(a_) < EPS) {
             return solve_lin();
         }
 
@@ -26,17 +28,17 @@ public:
 
         double D = b_ * b_ - 4 * a_ * c_;
 
-        if (D < 0) {
+        if (D <= -EPS) {
             return answer;
         }
 
-        if (D == 0) {
-            answer.push_back(-b_ / 2 / a_);
+        if (fabs(D) < EPS) {
+            answer.push_back(rm_negative_of_null(-b_ / 2 / a_));
             return answer;
         }
 
-        answer.push_back((-b_ + sqrt(D)) / 2 / a_);
-        answer.push_back((-b_ - sqrt(D)) / 2 / a_);
+        answer.push_back(rm_negative_of_null(-b_ + sqrt(D)) / 2 / a_);
+        answer.push_back(rm_negative_of_null(-b_ - sqrt(D)) / 2 / a_);
 
         return answer;
     }
@@ -64,10 +66,16 @@ private:
      */
     std::vector<double> solve_lin() {
         if (b_ != 0) {
-            return std::vector<double>(1, -c_ / b_);
+            return std::vector<double>(1, rm_negative_of_null(-c_ / b_));
         } else if (c_ == 0) {
             any_number = true;
         }
         return std::vector<double>(0);
+    }
+
+    double rm_negative_of_null(double a) {
+        if (fabs(a) < EPS) {
+            return 0;
+        }
     }
 };
