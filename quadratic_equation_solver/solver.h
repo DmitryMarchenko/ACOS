@@ -20,7 +20,7 @@ public:
      * @return Solution of quadratic equation
      */
     std::vector<double> Solve() {
-        if (fabs(a_) < EPS) {
+        if (equally(a_, 0)) {
             return solve_lin();
         }
 
@@ -32,7 +32,7 @@ public:
             return answer;
         }
 
-        if (fabs(D) < EPS) {
+        if (equally(D, 0)) {
             answer.push_back(rm_negative_of_null(-b_ / 2 / a_));
             return answer;
         }
@@ -65,17 +65,21 @@ private:
      * @return Solution of linear equation
      */
     std::vector<double> solve_lin() {
-        if (b_ != 0) {
+        if (!equally(b_, 0)) {
             return std::vector<double>(1, rm_negative_of_null(-c_ / b_));
-        } else if (c_ == 0) {
+        } else if (equally(c_, 0)) {
             any_number = true;
         }
         return std::vector<double>(0);
     }
 
     double rm_negative_of_null(double a) {
-        if (fabs(a) < EPS) {
+        if (equally(a, 0)) {
             return 0;
         }
+    }
+
+    bool equally(double a, double b) {
+        return fabs(a - b) < EPS;
     }
 };
