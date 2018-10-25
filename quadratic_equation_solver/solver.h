@@ -24,6 +24,10 @@ public:
             return solve_lin();
         }
 
+        if (equally(c_, 0)) {
+            return solve_with_zero_c();
+        }
+
         std::vector<double> answer;
 
         double D = b_ * b_ - 4 * a_ * c_;
@@ -73,10 +77,24 @@ private:
         return std::vector<double>(0);
     }
 
+    /**
+     * @private
+     * @brief Equation without free member solver
+     *
+     * @return Solution of equation without free member
+     */
+    std::vector<double> solve_with_zero_c() {
+        std::vector<double> answer(2);
+        answer.push_back(0);
+        answer.push_back(-b_/a_);
+        return answer;
+    }
+
     double rm_negative_of_null(double a) {
         if (equally(a, 0)) {
             return 0;
         }
+        return a;
     }
 
     bool equally(double a, double b) {

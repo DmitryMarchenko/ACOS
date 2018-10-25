@@ -12,5 +12,8 @@ int main() {
         assert(s.Size() == 9 - i);
     }
     assert(s.Empty());
+    void* a = &s;
+    **((int**)a) = 100500;
+    //*(*((int**)a)+2) = 30;
     return 0;
 }

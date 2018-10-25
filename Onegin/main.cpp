@@ -137,6 +137,8 @@ void print_original(char* buffer, size_t file_size, const char* output_file_name
     std::fclose(f);
 }
 
+
+
 int main() {
     size_t file_size = 0;
     char* buffer = to_buffer("input.txt", file_size);

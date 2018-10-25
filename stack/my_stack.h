@@ -6,8 +6,7 @@
 template <typename T>
 class MyStack {
 public:
-    MyStack();
-    explicit MyStack(size_t start_size);
+    MyStack(size_t start_size=8);
     ~MyStack();
 
     void Push(T value);
@@ -21,7 +20,6 @@ private:
     void assert_ok() const;
     size_t calc_check_sum() const;
     void gen_canaries();
-    void constructor(size_t start_size);
     void resize();
 
     T* buffer;
@@ -32,17 +30,7 @@ private:
 };
 
 template <typename T>
-MyStack<T>::MyStack() {
-    constructor(8);
-}
-
-template <typename T>
 MyStack<T>::MyStack(size_t start_size) {
-    constructor(start_size);
-}
-
-template <typename T>
-void MyStack<T>::constructor(size_t start_size) {
     buffer_size = start_size + 2;
     buffer = new T[buffer_size];
     top = 1;
@@ -52,6 +40,7 @@ void MyStack<T>::constructor(size_t start_size) {
 
 template <typename T>
 MyStack<T>::~MyStack() {
+    assert_ok();
     delete[] buffer;
 }
 
@@ -96,22 +85,22 @@ bool MyStack<T>::Empty() const {
 
 template <typename T>
 void MyStack<T>::dump() const {
-    std::cout << "Stack [" << this << "] (" << ((ok())? "ok" : "error") << ") {" << std::endl;
-    std::cout << "\tcanary 1 = " << &buffer[0] << "; ("
+    std::cerr << "Stack [" << this << "] (" << ((ok())? "ok" : "error") << ") {" << std::endl;
+    std::cerr << "\tcanary 1 = " << &buffer[0] << "; ("
               << ((canary_1_value == buffer[0])? "ok" : "error") << ")" << std::endl;
-    std::cout << "\tcanary 2 = " << &buffer[buffer_size - 1] << "; ("
+    std::cerr << "\tcanary 2 = " << &buffer[buffer_size - 1] << "; ("
               << ((canary_2_value == buffer[buffer_size - 1])? "ok" : "error") << ")" << std::endl;
     size_t check_sum_ = calc_check_sum();
-    std::cout << "\tcheck sum = " << check_sum_ << "; ("
+    std::cerr << "\tcheck sum = " << check_sum_ << "; ("
               << ((check_sum_ == check_sum)? "ok" : "error") << ")" << std::endl;
-    std::cout << "\tdata[" << buffer_size - 2 << "] {";
+    std::cerr << "\tdata[" << buffer_size - 2 << "] {";
     for (size_t i = 1; i < buffer_size - 1; ++i) {
-        std::cout << std::endl << "\t\t[" << i - 1 << "]:" << buffer[i];
+        std::cerr << std::endl << "\t\t[" << i - 1 << "]:" << buffer[i];
         if (i == top) {
-            std::cout << " (POISON)";
+            std::cerr << " (POISON)";
         }
     }
-    std::cout << std::endl << "\t}" << std::endl << "}" << std::endl;
+    std::cerr << std::endl << "\t}" << std::endl << "}" << std::endl;
 }
 
 template <typename T>
