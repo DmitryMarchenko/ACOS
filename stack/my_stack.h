@@ -12,14 +12,14 @@ public:
 
     void Push(T value);
     T Pop();
-    size_t Size();
-    bool Empty();
+    size_t Size() const;
+    bool Empty() const;
 
 private:
-    bool ok();
-    void dump();
-    void assert_ok();
-    size_t calc_check_sum();
+    bool ok() const;
+    void dump() const;
+    void assert_ok() const;
+    size_t calc_check_sum() const;
     void gen_canaries();
     void constructor(size_t start_size);
     void resize();
@@ -68,7 +68,7 @@ void MyStack<T>::gen_canaries() {
 }
 
 template <typename T>
-size_t MyStack<T>::calc_check_sum() {
+size_t MyStack<T>::calc_check_sum() const {
     size_t result = 0;
     auto ptr = (char*)(buffer);
     for (size_t i = 0; i < buffer_size * sizeof(T); ++i) {
@@ -78,24 +78,24 @@ size_t MyStack<T>::calc_check_sum() {
 }
 
 template <typename T>
-bool MyStack<T>::ok() {
+bool MyStack<T>::ok() const {
     return buffer[0] == canary_1_value
            && buffer[buffer_size - 1] == canary_2_value
            && calc_check_sum() == check_sum;
 }
 
 template <typename T>
-size_t MyStack<T>::Size() {
+size_t MyStack<T>::Size() const {
     return top - 1;
 }
 
 template <typename T>
-bool MyStack<T>::Empty() {
+bool MyStack<T>::Empty() const {
     return top == 1;
 }
 
 template <typename T>
-void MyStack<T>::dump() {
+void MyStack<T>::dump() const {
     std::cout << "Stack [" << this << "] (" << ((ok())? "ok" : "error") << ") {" << std::endl;
     std::cout << "\tcanary 1 = " << &buffer[0] << "; ("
               << ((canary_1_value == buffer[0])? "ok" : "error") << ")" << std::endl;
@@ -115,7 +115,7 @@ void MyStack<T>::dump() {
 }
 
 template <typename T>
-void MyStack<T>::assert_ok() {
+void MyStack<T>::assert_ok() const {
     if (!ok()) {
         dump();
         std::cerr << "Stack invalid!" << std::endl;
